@@ -7,12 +7,17 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
+  Routes,
 } from "react-router-dom";
+import HomePage from './pages/HomePage.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-    </Route>
+ 
+      <Route path="/" element={<App />}>
+        <Route index element={<HomePage/>} />
+      </Route>
+
   )
 );
 
