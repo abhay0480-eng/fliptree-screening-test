@@ -1,4 +1,6 @@
 import React from 'react'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FaceIcon from '@mui/icons-material/Face';
 
 const Header = () => {
   return (
@@ -11,8 +13,16 @@ const Header = () => {
             <p>Blog</p>
             <p>Contact</p>
         </div>
-        <div>
-            Cart
+        <div className='flex justify-start items-center gap-x-5 cursor-pointer'>
+          <div className='text-center'>
+            <FaceIcon/>
+            <p>Login</p>
+          </div>
+          <div>
+            <ShoppingCartIcon/>
+            <p>Cart</p>
+          </div>
+            
         </div>
     </header>
   )

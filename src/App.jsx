@@ -9,7 +9,7 @@ function App() {
   return (
     <>
      <Header/>
-     <main className='mt-10'>
+     <main className='mt-20'>
       <Outlet/>
      </main>
      <Footer/>

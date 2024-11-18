@@ -7,22 +7,27 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-  Routes,
 } from "react-router-dom";
 import HomePage from './pages/HomePage.jsx';
+import { Provider } from 'react-redux';
+import { store } from './store/store.js';
+import CartPage from './pages/CartPage.jsx';
+import ProductPage from './pages/ProductPage.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
- 
       <Route path="/" element={<App />}>
         <Route index element={<HomePage/>} />
+        <Route path="cart" element={<CartPage/>} />
+        <Route path="product" element={<ProductPage/>} />
       </Route>
-
   )
 );
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={store}>
     <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 )
