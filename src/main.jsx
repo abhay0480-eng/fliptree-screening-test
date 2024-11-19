@@ -16,6 +16,7 @@ import ProductPage from './pages/ProductPage.jsx';
 import AuthLayout from './components/AuthLayout/AuthLayout.jsx';
 import Contact from './pages/Contact.jsx';
 import Blog from './pages/Blog.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
         <Route path="product" element={<AuthLayout  ><ProductPage/></AuthLayout>} />
         <Route path="contact" element={<AuthLayout ><Contact/></AuthLayout>} />
         <Route path="blog" element={<AuthLayout  ><Blog/></AuthLayout>} />
+        <Route path="*" element={<NotFound />} />
       </Route>
   )
 );

@@ -12,7 +12,6 @@ const CartPage = () => {
     };
 
     const handleQuantityChange = (id, quantity) => {
-      
         if (quantity < 1) return; 
         dispatch(updateItemQuantity({ id, quantity })); 
     };
@@ -20,9 +19,6 @@ const CartPage = () => {
     const handleClearCart = () => {
         dispatch(clearCart()); 
     };
-
-    console.log("cartItems",cartItems);
-    
 
     return (
         <div className="container mx-auto p-4">
@@ -41,32 +37,32 @@ const CartPage = () => {
                                 <th className="py-2 px-4 border-b">Actions</th>
                             </tr>
                         </thead>
-                        <tbody >
-                            {cartItems.map((item) => (
-                                <tr key={item.id}>
-                                    <td className="py-2 px-4 border-b">{item.name}</td>
-                                    <td className="py-2 px-4 border-b">
-                                        <input
-                                            type="number"
-                                            min="1"
-                                            value={item.quantity}
-                                            onChange={(e) => handleQuantityChange(item._id, Number(e.target.value))}
-                                            className="border border-gray-300 rounded w-16 text-center"
-                                        />
-                                    </td>
-                                    <td className="py-2 px-4 border-b">${item.price.toFixed(2)}</td>
-                                    <td className="py-2 px-4 border-b">${(item.price * item.quantity).toFixed(2)}</td>
-                                    <td className="py-2 px-4 border-b">
-                                        <button
-                                            onClick={() => handleRemove(item._id)}
-                                            className="text-red-500 hover:text-red-700"
-                                        >
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
+                        <tbody>
+                        {cartItems.map((item) => (
+                            <tr key={item.id}>
+                                <td className="py-2 px-4 border-b text-center">{item.name}</td>
+                                <td className="py-2 px-4 border-b text-center">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={item.quantity}
+                                        onChange={(e) => handleQuantityChange(item._id, Number(e.target.value))}
+                                        className="border border-gray-300 rounded w-16 text-center"
+                                    />
+                                </td>
+                                <td className="py-2 px-4 border-b text-center">${item.price.toFixed(2)}</td>
+                                <td className="py-2 px-4 border-b text-center">${(item.price * item.quantity).toFixed(2)}</td>
+                                <td className="py-2 px-4 border-b text-center">
+                                    <button
+                                        onClick={() => handleRemove(item._id)}
+                                        className="text-red-500 hover:text-red-700"
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                     </table>
                     <div className="mt-4">
                         <h2 className="text-xl font-bold">Total Price: ${totalPrice.toFixed(2)}</h2>

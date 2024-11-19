@@ -17,11 +17,22 @@ const HomePage = () => {
       <NewArrival title="Popular Items"/>
       <OrganieStore flag="Where to buy Plants"/>
       <NewArrival title="Instagram Images"/>
-      <div className='grid grid-cols-3 gap-x-5 text-xl font-semibold justify-items-center content-center mt-20 p-10 bg-green-300'>
-        <div><LocalShippingIcon className='!text-5xl'/> Free Shipping</div>
-        <div><SupportAgentIcon className='!text-5xl'/>  Dedicated Support</div>
-        <div><AccountBalanceWalletIcon className='!text-5xl'/> Money back</div>
+      <div className='mt-20 p-10 bg-green-300'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 text-xl font-semibold justify-items-center content-center'>
+        <div className='flex flex-col items-center'>
+          <LocalShippingIcon className='!text-5xl mb-2' />
+          <span>Free Shipping</span>
+        </div>
+        <div className='flex flex-col items-center'>
+          <SupportAgentIcon className='!text-5xl mb-2' />
+          <span>Dedicated Support</span>
+        </div>
+        <div className='flex flex-col items-center'>
+          <AccountBalanceWalletIcon className='!text-5xl mb-2' />
+          <span>Money Back</span>
+        </div>
       </div>
+    </div>
     </div>
   )
 }
