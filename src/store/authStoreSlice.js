@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
 
 // Function to load state from local storage
 const loadState = () => {
@@ -15,7 +16,6 @@ const loadState = () => {
 
 // Function to save state to local storage
 const saveState = (state) => {
-  console.log("state",state);
   
     try {
         const serializedState = JSON.stringify(state);
@@ -48,7 +48,8 @@ export const authStoreSlice = createSlice({
             state.token = "";
             state.data = {};
             state.isLoggedIn = false; // Update login status
-            saveState(state); // Save updated state to local storage
+            saveState(state);
+            toast.success("User logout Successfully") // Save updated state to local storage
         },
     },
 });

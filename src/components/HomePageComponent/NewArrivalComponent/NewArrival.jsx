@@ -8,7 +8,6 @@ const NewArrival = ({title}) => {
     try {
       const reqData = await fetch("https://fakestoreapi.in/api/products?limit=4")
       const resData = await reqData.json()
-      console.log("resData",resData?.products);
       setProductsData(resData?.products || [])
 
       // if(resData?.success){
@@ -24,7 +23,6 @@ const NewArrival = ({title}) => {
     fetchData()
   },[])
 
-  console.log("productsData",productsData);
   
 
   return (

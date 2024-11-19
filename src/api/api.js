@@ -12,7 +12,7 @@ export const useApi = () => {
   const handlePostRequest = async (url, payload) => {
         try {
             const response = await axios.post(`${baseUrl}/${url}`, payload, config);
-            console.log("response",response?.data);
+            
             
             return response?.data
         }catch(error){
@@ -23,10 +23,10 @@ export const useApi = () => {
   const handleGetRequest = async (url) => {
    
     try {
-      const request = await axios.get(`${baseUrl}/${url}`, config);
-      const response = await request.json()
-            console.log("response",response);
+      const response = await axios.get(`${baseUrl}/${url}`, config);
+       return response?.data
     }catch(error){
+      console.log("error",error);
 
     }
      

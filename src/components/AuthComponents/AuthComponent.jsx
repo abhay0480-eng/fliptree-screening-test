@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { useApi } from '../../api/api';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authStoreSlice';
+import toast from 'react-hot-toast';
 
 const AuthComponent = () => {
     const dispatch = useDispatch();
     // State to hold the input values
     const [formData, setFormData] = useState({
         email: '',
-        password: 'Abhay@1234',
-        username: 'mdndocs0480' // Added for signup
+        password: 'AU1aUnczS8kBdQK',
+        username: 'joy23' // Added for signup
     });
     const {handlePostRequest,handleGetRequest} = useApi()
     
@@ -45,7 +46,6 @@ const AuthComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validateData = validate(); // Assuming you have a validate function
-        console.log("validateData", validateData);
         
         if (Object.keys(validateData).length > 0) {
             setError(validateData);
@@ -60,24 +60,24 @@ const AuthComponent = () => {
 
                 try {
                     const response = await handlePostRequest('users/register', payload);
-                    console.log("responsesignup", response);
                     // Handle success response
-                    if (response) {
+                    if (response?.success) {
                         // Dispatch login action with token and user data
-                        dispatch(login({ token: response?.data?.accessToken, data: response?.data?.user }));
-                        setSuccess('Signup successful!');
+                        toast.success(response?.message)
+                        setIsSignup(false)
                         // Optionally reset form or redirect
                         setFormData({ email: '', password: '', username: '' });
+
                     }
                 } catch (err) {
                     setError('Signup failed!'); // Handle error response
                     setFormData({ email: '', password: '', username: '' });
+                    toast.error(response?.response?.data?.message)
                 }finally{
                     setFormData({ email: '', password: '', username: '' });
                 }
 
             } else {
-                console.log("login block");
                 
                 const payload = {
                     username: formData.username, // Ensure you use email for login
@@ -85,13 +85,15 @@ const AuthComponent = () => {
                 };
                 try {
                     const response = await handlePostRequest('users/login', payload);
-                    console.log("responselogin", response?.success);
                     // Handle success response
+                    
                     if (response?.success) {
-                        
-                        // Dispatch login action with token and user data
                         dispatch(login({ token: response.token, data: response.user }));
                         setFormData({ email: '', password: '', username: '' });
+                        toast.success(response?.message)
+
+                    }else{
+                        toast.error(response?.response?.data?.message)
                     }
                 } catch (err) {
                     setError('Login failed!'); // Handle error response

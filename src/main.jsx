@@ -13,13 +13,18 @@ import { Provider } from 'react-redux';
 import { store } from './store/store.js';
 import CartPage from './pages/CartPage.jsx';
 import ProductPage from './pages/ProductPage.jsx';
+import AuthLayout from './components/AuthLayout/AuthLayout.jsx';
+import Contact from './pages/Contact.jsx';
+import Blog from './pages/Blog.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
       <Route path="/" element={<App />}>
-        <Route index element={<HomePage/>} />
-        <Route path="cart" element={<CartPage/>} />
-        <Route path="product" element={<ProductPage/>} />
+        <Route index element={<AuthLayout authentication={false} ><HomePage/></AuthLayout>} />
+        <Route path="cart" element={<AuthLayout ><CartPage/></AuthLayout>} />
+        <Route path="product" element={<AuthLayout  ><ProductPage/></AuthLayout>} />
+        <Route path="contact" element={<AuthLayout ><Contact/></AuthLayout>} />
+        <Route path="blog" element={<AuthLayout  ><Blog/></AuthLayout>} />
       </Route>
   )
 );
