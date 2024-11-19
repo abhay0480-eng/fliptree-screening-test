@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { useApi } from '../../api/api';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/authStoreSlice';
 
 const AuthComponent = () => {
+    const dispatch = useDispatch();
     // State to hold the input values
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        username: '' // Added for signup
+        password: 'Abhay@1234',
+        username: 'mdndocs0480' // Added for signup
     });
     const {handlePostRequest,handleGetRequest} = useApi()
     
     // State to toggle between login and signup
     const [isSignup, setIsSignup] = useState(false);
-
     const [error, setError] = useState({});
-
-
-
 
     const handleChange = (e) => {
         setFormData(pre => ({ ...pre, [e.target.name]: e.target.value }));
@@ -43,66 +42,69 @@ const AuthComponent = () => {
     return errors
   }
 
-    // Handle form submission
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const validateData = validate()
+        const validateData = validate(); // Assuming you have a validate function
         console.log("validateData", validateData);
         
-        if(Object.keys(validateData).length>0){
-            setError(validateData)
-          }else{
-            if(isSignup){
+        if (Object.keys(validateData).length > 0) {
+            setError(validateData);
+        } else {
+            if (isSignup) {
                 const payload = { 
-                email: formData.email,
-                password: formData.password,
-                username: formData.username,
-                role: 'ADMIN', 
-                }// Adjust role as needed
+                    email: formData.email,
+                    password: formData.password,
+                    username: formData.username,
+                    role: 'ADMIN', 
+                }; // Adjust role as needed
 
                 try {
                     const response = await handlePostRequest('users/register', payload);
-                    console.log("responsesignup",response);
+                    console.log("responsesignup", response);
                     // Handle success response
                     if (response) {
-                        
-                        
+                        // Dispatch login action with token and user data
+                        dispatch(login({ token: response?.data?.accessToken, data: response?.data?.user }));
                         setSuccess('Signup successful!');
                         // Optionally reset form or redirect
                         setFormData({ email: '', password: '', username: '' });
                     }
                 } catch (err) {
                     setError('Signup failed!'); // Handle error response
+                    setFormData({ email: '', password: '', username: '' });
+                }finally{
+                    setFormData({ email: '', password: '', username: '' });
                 }
 
-            }else{
+            } else {
                 console.log("login block");
                 
                 const payload = {
+                    username: formData.username, // Ensure you use email for login
                     password: formData.password,
-                    username: formData.username
-                }
+                };
                 try {
                     const response = await handlePostRequest('users/login', payload);
-                    console.log("responselogin",response);
+                    console.log("responselogin", response?.success);
                     // Handle success response
-                    if (response) {
-                       
+                    if (response?.success) {
                         
-                        setSuccess('login successful!');
-                        // Optionally reset form or redirect
+                        // Dispatch login action with token and user data
+                        dispatch(login({ token: response.token, data: response.user }));
                         setFormData({ email: '', password: '', username: '' });
                     }
                 } catch (err) {
-                    setError('Signup failed!'); // Handle error response
+                    setError('Login failed!'); // Handle error response
+                    setFormData({ email: '', password: '', username: '' });
+                }finally{
+                    setFormData({ email: '', password: '', username: '' });
                 }
             }
-          }
-      
+        }
     };
 
     return (
-        <div className='fixed top-1/2 w-2/5 h-auto z-[100] rounded-lg text-white bg-black bg-opacity-90 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 px-20'>
+        <div className='fixed top-1/2 w-2/5 h-auto z-[100]  rounded-lg text-white bg-black bg-opacity-90 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 px-20'>
             <h1 className='text-4xl font-semibold my-5'>{isSignup ? 'Sign Up' : 'Login'}</h1>
             <form onSubmit={handleSubmit}>
                 {isSignup && (
